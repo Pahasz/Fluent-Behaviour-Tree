@@ -18,18 +18,18 @@ namespace FluentBehaviourTree
         /// <summary>
         /// Function to invoke for the action.
         /// </summary>
-        private Func<TimeData, BehaviourTreeStatus> fn;
+        private Func<TreeData, BehaviourTreeStatus> fn;
         
 
-        public ActionNode(string name, Func<TimeData, BehaviourTreeStatus> fn)
+        public ActionNode(string name, Func<TreeData, BehaviourTreeStatus> fn)
         {
             this.name=name;
             this.fn=fn;
         }
 
-        public BehaviourTreeStatus Tick(TimeData time)
+        public virtual BehaviourTreeStatus Tick(TreeData data)
         {
-            return fn(time);
+            return fn(data);
         }
     }
 }

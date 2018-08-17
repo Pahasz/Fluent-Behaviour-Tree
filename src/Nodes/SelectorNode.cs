@@ -25,11 +25,11 @@ namespace FluentBehaviourTree
             this.name = name;
         }
 
-        public BehaviourTreeStatus Tick(TimeData time)
+        public BehaviourTreeStatus Tick(TreeData data)
         {
             foreach (var child in children)
             {
-                var childStatus = child.Tick(time);
+                var childStatus = child.Tick(data);
                 if (childStatus != BehaviourTreeStatus.Failure)
                 {
                     return childStatus;

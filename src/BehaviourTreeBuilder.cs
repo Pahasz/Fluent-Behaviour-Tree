@@ -23,7 +23,7 @@ namespace FluentBehaviourTree
         /// <summary>
         /// Create an action node.
         /// </summary>
-        public BehaviourTreeBuilder Do(string name, Func<TimeData, BehaviourTreeStatus> fn)
+        public BehaviourTreeBuilder Do(string name, Func<TreeData, BehaviourTreeStatus> fn)
         {
             if (parentNodeStack.Count <= 0)
             {
@@ -38,7 +38,7 @@ namespace FluentBehaviourTree
         /// <summary>
         /// Like an action node... but the function can return true/false and is mapped to success/failure.
         /// </summary>
-        public BehaviourTreeBuilder Condition(string name, Func<TimeData, bool> fn)
+        public BehaviourTreeBuilder Condition(string name, Func<TreeData, bool> fn)
         {
             return Do(name, t => fn(t) ? BehaviourTreeStatus.Success : BehaviourTreeStatus.Failure);
         }
@@ -56,6 +56,22 @@ namespace FluentBehaviourTree
             }
 
             parentNodeStack.Push(inverterNode);
+            return this;
+        }
+
+        /// <summary>
+        /// Create an inverter node that inverts the success/failure of its children.
+        /// </summary>
+        public BehaviourTreeBuilder AlwaysTrue(string name)
+        {
+            var alwaysTrueNode = new AlwaysTrueNode(name);
+
+            if (parentNodeStack.Count > 0)
+            {
+                parentNodeStack.Peek().AddChild(alwaysTrueNode);
+            }
+
+            parentNodeStack.Push(alwaysTrueNode);
             return this;
         }
 

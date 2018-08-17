@@ -8,7 +8,7 @@ namespace FluentBehaviourTree
     /// <summary>
     /// Decorator node that inverts the success/failure of its child.
     /// </summary>
-    public class InverterNode : IParentBehaviourTreeNode
+    public class AlwaysTrueNode : IParentBehaviourTreeNode
     {
         /// <summary>
         /// Name of the node.
@@ -20,7 +20,7 @@ namespace FluentBehaviourTree
         /// </summary>
         private IBehaviourTreeNode childNode;
 
-        public InverterNode(string name)
+        public AlwaysTrueNode(string name)
         {
             this.name = name;
         }
@@ -39,7 +39,7 @@ namespace FluentBehaviourTree
             }
             else if (result == BehaviourTreeStatus.Success)
             {
-                return BehaviourTreeStatus.Failure;
+                return BehaviourTreeStatus.Success;
             }
             else
             {
